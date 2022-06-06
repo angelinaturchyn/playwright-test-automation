@@ -4,11 +4,7 @@ const orderPayload = {user_id: "123325", foxtrot_id: 55878, quantity: 1}
 let token;
 
 
-test.beforeEach( ()=> {
-
-})
-
-test.only('Successful login', async ({page}) => {
+test.beforeEach( async()=> {
     const apiContext = await request.newContext();
     const responseAuth = await apiContext.post("https://staging.api.foxtrotchicago.com/v5/login",
      {
@@ -19,7 +15,11 @@ test.only('Successful login', async ({page}) => {
     console.log(loginResponseJson)
     token = await loginResponseJson.user.api_token;
     console.log(token)
+})
 
+test('Add an item to your cart', async ({page}) => {
+
+   const apiContext = await request.newContext();
    const orderResponse = await apiContext.post("https://staging.api.foxtrotchicago.com/v6/cart/549f9fa4-1de8-43eb-bd03-727650d64300",
      {
         data: orderPayload,
@@ -33,5 +33,11 @@ test.only('Successful login', async ({page}) => {
     console.log(orderResponse) 
     const orderResponseJson = await orderResponse.json();
     console.log(orderResponseJson)
+})
+
+test('Checkout as a logged in user', async({page})=> { 
+
+    const apiContext = await request.newContext();
+    const completeOrder = await apiContext.post("https://staging.api.foxtrotchicago.com/v5/orders-v2")
 
 })
