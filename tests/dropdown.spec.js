@@ -6,7 +6,7 @@ test.beforeEach(async ({ page }) => {
   await expect(page).toHaveURL('https:/foxtrotco.com');
 });
 
-test.only('Dropdown State', async ({ page }) => {
+test('Dropdown State', async ({ page }) => {
   
   await expect(page).toHaveTitle('Foxtrot');
   
