@@ -1,7 +1,11 @@
 const {test, exepect, request, expect} = require('@playwright/test');
 const loginPayload = {email: "loop@gmail.com", password: "1234567"};
-const orderPayload = {user_id: "123325", foxtrot_id: 55878, quantity: 1}
-let token;
+const createCartPayload = {cart_type: "standard", on_conflict: "merge", order_type: "pickup", store_id: 2};
+
+const checkoutPayload = {user_id: "123325", addressId: 9118, paymentToken: "nxj7hhg"};
+let token = 'Bearer 37512|UEhu6O9EPnOLh6Qjakn2bW0oabXHLgoGxbyo6WjU'
+let userCartID;
+const addItemToCartPayload = {cart_id: `${userCartID}`,foxtrot_id: 50171,quantity: 1,store_id: 2,update_values: false, user_id: "123325"}
 
 
 test.beforeEach( async()=> {
@@ -13,31 +17,64 @@ test.beforeEach( async()=> {
     expect(responseAuth.ok()).toBeTruthy();
     const loginResponseJson = await responseAuth.json();
     console.log(loginResponseJson)
-    token = await loginResponseJson.user.api_token;
-    console.log(token)
+    tokenLogin = await loginResponseJson.user.api_token;
+    console.log(tokenLogin)
 })
 
-test('Add an item to your cart', async ({page}) => {
+test('Create cart', async ({page}) => {
 
    const apiContext = await request.newContext();
-   const orderResponse = await apiContext.post("https://staging.api.foxtrotchicago.com/v6/cart/549f9fa4-1de8-43eb-bd03-727650d64300",
+   const createCartResponse = await apiContext.post("https://staging.api.foxtrotchicago.com/v6/cart/",
      {
-        data: orderPayload,
+        data: createCartPayload,
         headers: 
         {
-          'Authorization':  'Bearer 37512|UEhu6O9EPnOLh6Qjakn2bW0oabXHLgoGxbyo6WjU',
+          'Authorization':  token,
           'Content-type': 'application/json'
         }
      })
 
-    console.log(orderResponse) 
-    const orderResponseJson = await orderResponse.json();
-    console.log(orderResponseJson)
+    const createCartResponseJson = await createCartResponse.json();
+    console.log(createCartResponseJson)
+    userCartID = await createCartResponseJson.cart.cart_id;
+    console.log(userCartID)
 })
 
-test('Checkout as a logged in user', async({page})=> { 
+test('Add an item to your cart', async({page})=> {
 
     const apiContext = await request.newContext();
-    const completeOrder = await apiContext.post("https://staging.api.foxtrotchicago.com/v5/orders-v2")
+    const addAnItemToCart = await apiContext.post( `https://staging.api.foxtrotchicago.com/v6/cart/${userCartID}`, 
+    
+    {
+        data: addItemToCartPayload,
+        headers: 
+        {
+            'Authorization': token,
+            'Content-type': 'application/json'
+        }
+    })
 
+    const addAnItemToCartResponse = await addAnItemToCart.json();
+    console.log(addAnItemToCartResponse)
+   
 })
+
+// test('Checkout as a logged in user', async({page})=> { 
+
+//     const apiContext = await request.newContext();
+//     const completeOrder = await apiContext.post("https://staging.api.foxtrotchicago.com/v5/orders-v2", 
+    
+//     {
+//         data: checkoutPayload,
+//         headers: 
+//         {
+//             'Authorization': token,
+//             'Content-type': 'application/json'
+//         }
+
+//     })
+
+//     console.log(completeOrder)
+//     const completeOrderJson = await completeOrder.json()
+//     console.log(completeOrderJson)
+// })
