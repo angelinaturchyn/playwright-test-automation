@@ -1,6 +1,6 @@
 const {test, exepect, request, expect} = require('@playwright/test');
 const loginPayload = {email: "loop@gmail.com", password: "1234567"};
-const createCartPayload = {cart_type: "standard", on_conflict: "merge", order_type: "delivery", store_id: 2};
+const createCartPayload = {cart_type: "standard", on_conflict: "merge", order_type: "pickup", store_id: 2};
 
 const checkoutPayload = {user_id: "123325", addressId: "1019 West Lake", paymentToken: "nxj7hhg",deliveryWindow: {startUTC: "2022-06-06T14:00:00+00:00", endUTC: "2022-06-06T15:00:00+00:00"}};
 let token = 'Bearer 37512|UEhu6O9EPnOLh6Qjakn2bW0oabXHLgoGxbyo6WjU'
