@@ -28,7 +28,7 @@ class APIUtils {
            data: this.createCartPayload,
            headers: 
            {
-             'Authorization':  this.token,
+             'Authorization':  this.token(),
              'Content-type': 'application/json'
            }
         })
@@ -46,7 +46,7 @@ class APIUtils {
         data: this.addItemToCartPayload,
         headers: 
         {
-            'Authorization': this.token,
+            'Authorization': this.token(),
             'Content-type': 'application/json'
         }
     })
@@ -55,21 +55,25 @@ class APIUtils {
     }
 
     async loggedInCheckout() {
+        let response = {};
+        response.token = await this.token();
         const completeOrder = await this.apiContext.post("https://staging.api.foxtrotchicago.com/v5/orders-v2", 
         {
             data: this.checkoutPayload,
             headers: 
             {
-                'Authorization': this.token,
+                'Authorization': this.token(),
                 'Content-type': 'application/json'
             }
         })
-        console.log(completeOrder)
         const completeOrderJson = await completeOrder.json()
         console.log(completeOrderJson)
     
         orderId = await completeOrderJson.data.status.orderId;
         console.log(orderId)
+        response.orderId = orderId;
+        return orderId;
+
     }
 }
 
