@@ -1,6 +1,7 @@
 const {test} = require('@playwright/test');
+let webContext;
 
-test.only('Log In through UI on staging gating page', async ({ browser }) => {
+test('Log In through UI on staging gating page', async ({ browser }) => {
  const context = await browser.newContext();  
  const page = await context.newPage(); 
  await page.goto('https:/staging.foxtrotco.com');

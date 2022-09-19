@@ -20,9 +20,10 @@ test('Add an item to your cart', async({page})=> {
     const apiContext = await request.newContext();
     const apiUtils = new APIUtils(apiContext,addItemToCartPayload)
     
+    
 })
 
 test('Checkout as a logged in user', async({page})=> {
     const apiContext = await request.newContext();
-    const apiUtils = new APIUtils(apiContext,)
+    const apiUtils = new APIUtils(apiContext)
 })

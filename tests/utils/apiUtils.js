@@ -14,10 +14,9 @@ class APIUtils {
      {
          data: this.loginPayload
      })
-    expect(responseAuth.ok()).toBeTruthy();
     const loginResponseJson = await responseAuth.json();
     console.log(loginResponseJson)
-    tokenLogin = await loginResponseJson.user.api_token;
+    let tokenLogin = await loginResponseJson.user.api_token;
     console.log(tokenLogin)
     return tokenLogin
     }
@@ -70,9 +69,9 @@ class APIUtils {
         console.log(completeOrderJson)
     
         orderId = await completeOrderJson.data.status.orderId;
-        console.log(orderId)
         response.orderId = orderId;
         return orderId;
+       
 
     }
 }
