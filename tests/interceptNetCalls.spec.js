@@ -4,33 +4,39 @@ const backboneLogin = {username: "aturchyn@foxtrotco.com", password: "Angelina10
 const loginPayload = {email: "loop@gmail.com", password: "1234567"};
 const createCartPayload = {cart_type: "standard", on_conflict: "merge", order_type: "pickup", store_id: 2};
 const fakePayLoadOrders = {status:1,orders:[]}
-let token
+let backBoneToken
+let staging
+let webContext
 
-
-test.only('Login as an auth user', async ({page}) => {
+test.beforeAll(async () => {
    const apiContext = await request.newContext();
-   const apiUtils = new APIUtils(apiContext,backboneLogin,loginPayload)
-   await apiUtils.loginBackbone()
-   token = await apiUtils.getToken()
-
-  //  page.addInitScript(value => {
-  //   window.localStorage.setItem('token', value);
-  // }, token)
-  
-   await page.goto(' https://foxtrot-next-fe-sandbox.onrender.com/home')
-   page.pause()
-
-
-  //  await page.route(`https://staging.api.foxtrotchicago.com/v5/users/order-history?`,
-  //  async route => {
-  //     const response = await page.request.fetch(route.request())
-  //     let body = fakePayLoadOrders
-  //     route.fulfill(
-  //       {
-  //           response,
-  //           body
-  //       }
-  //     )
-  //  })
-   
+   const apiUtils = new APIUtils(apiContext,backboneLogin)
+   backBoneToken = apiUtils.loginBackbone()
 })
+
+test('Login to staging',async({page}) => {
+   const apiContext = await request.newContext();
+   await apiContext.post("https://backbone.api.foxtrotco.com/v1/login", {
+      headers: {
+        'Accept': 'application/json',
+      },
+      data: {
+         'Authorization': backBoneToken,
+      }
+    });
+  
+   await page.addInitScript(value => {
+    window.localStorage.setItem('token', value);
+   }, backBoneToken)
+
+     await page.goto("https://staging.foxtrotco.com/home")
+     await page.waitForURL("https://staging.foxtrotco.com/account/profile")
+
+})
+  
+  
+  
+
+
+ 
+

@@ -1,8 +1,10 @@
+const { expect } = require("@playwright/test");
+
 class APIUtils {
 
     constructor(apiContext,loginPayload,createCartPayload,addItemToCartPayload,checkoutPayload,backboneLogin) {
        this.apiContext = apiContext;
-       //this.token = 'Bearer 37512|UEhu6O9EPnOLh6Qjakn2bW0oabXHLgoGxbyo6WjU';
+       this.token = 'Bearer 37512|UEhu6O9EPnOLh6Qjakn2bW0oabXHLgoGxbyo6WjU';
        this.loginPayload = loginPayload;
        this.createCartPayload = createCartPayload;
        this.addItemToCartPayload = addItemToCartPayload;
@@ -18,7 +20,8 @@ class APIUtils {
         const loginBackboneResponseJson = await responseBackBoneAuth.json();
         console.log(loginBackboneResponseJson)
         let tokenBackboneLogin = await loginBackboneResponseJson.token
-        console.log(tokenBackboneLogin)
+        expect(responseBackBoneAuth).toBeOK()
+        return tokenBackboneLogin
     }
 
     async getToken() {
