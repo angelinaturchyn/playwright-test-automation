@@ -1,12 +1,27 @@
+const { expect } = require("@playwright/test");
+
 class APIUtils {
 
-    constructor(apiContext,loginPayload,createCartPayload,addItemToCartPayload,checkoutPayload) {
+    constructor(apiContext,loginPayload,createCartPayload,addItemToCartPayload,checkoutPayload,backboneLogin) {
        this.apiContext = apiContext;
        this.token = 'Bearer 37512|UEhu6O9EPnOLh6Qjakn2bW0oabXHLgoGxbyo6WjU';
        this.loginPayload = loginPayload;
        this.createCartPayload = createCartPayload;
        this.addItemToCartPayload = addItemToCartPayload;
        this.checkoutPayload = checkoutPayload;
+       this.backboneLogin = {username: "aturchyn@foxtrotco.com", password: "Angelina10trinity@"}
+    }
+
+    async loginBackbone() {
+        const responseBackBoneAuth = await this.apiContext.post("https://backbone.api.foxtrotco.com/v1/login",
+        {
+            data: this.backboneLogin
+        })
+        const loginBackboneResponseJson = await responseBackBoneAuth.json();
+        console.log(loginBackboneResponseJson)
+        let tokenBackboneLogin = await loginBackboneResponseJson.token
+        expect(responseBackBoneAuth).toBeOK()
+        return tokenBackboneLogin
     }
 
     async getToken() {
