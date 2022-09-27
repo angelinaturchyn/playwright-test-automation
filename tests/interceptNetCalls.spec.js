@@ -1,6 +1,6 @@
 const {test, exepect, request} = require('@playwright/test');
 const { APIUtils } = require('./utils/apiUtils');
-const backboneLogin = {username: "aturchyn@foxtrotco.com", password: "Angelina10trinity@"}
+const backboneLogin = {username: "a.com", password: "@"}
 const loginPayload = {email: "loop@gmail.com", password: "1234567"};
 const createCartPayload = {cart_type: "standard", on_conflict: "merge", order_type: "pickup", store_id: 2};
 const fakePayLoadOrders = {status:1,orders:[]}
