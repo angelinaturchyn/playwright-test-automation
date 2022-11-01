@@ -31,12 +31,4 @@ test('Login to staging',async({page}) => {
 
      await page.goto("https://staging.foxtrotco.com/home")
      await page.waitForURL("https://staging.foxtrotco.com/account/profile")
-
 })
-  
-  
-  
-
-
- 
-
