@@ -9,7 +9,7 @@ class APIUtils {
        this.createCartPayload = createCartPayload;
        this.addItemToCartPayload = addItemToCartPayload;
        this.checkoutPayload = checkoutPayload;
-       this.backboneLogin = {username: "aturchyn@foxtrotco.com", password: "Angelina10trinity@"}
+       this.backboneLogin = {username: username, password: password}
     }
 
     async loginBackbone() {
