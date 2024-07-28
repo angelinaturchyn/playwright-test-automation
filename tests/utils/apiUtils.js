@@ -4,7 +4,7 @@ class APIUtils {
 
     constructor(apiContext,loginPayload,createCartPayload,addItemToCartPayload,checkoutPayload,backboneLogin) {
        this.apiContext = apiContext;
-       this.token = 'Bearer 37512|UEhu6O9EPnOLh6Qjakn2bW0oabXHLgoGxbyo6WjU';
+       this.token = this.token;
        this.loginPayload = loginPayload;
        this.createCartPayload = createCartPayload;
        this.addItemToCartPayload = addItemToCartPayload;
