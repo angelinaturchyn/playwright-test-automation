@@ -61,28 +61,6 @@ test('basic test', async ({ page }) => {
 
 To execute the tests, use the following command:
 
-``` npx wdio run wdio.conf.js ```
-
-
-### Project Structure
-
-
-```
-├── features
-│   ├── example.feature
-│   └── step_definitions
-│       └── example.steps.js
-├── wdio.conf.js
-├── package.json
-└── README.md
-
-```
-
-
-### Running Tests
-
-To execute the tests, use the following command:
-
 ``` npx playwright test ```
 
 
